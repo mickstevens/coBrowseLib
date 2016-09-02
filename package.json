@@ -2,9 +2,9 @@
   "name": "coBrowseLib",
   "version": "1.0.0",
   "description": "CoBrowsing Library for HTML forms , built on top of Twilio Sync",
-  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www"
   },
   "repository": {
     "type": "git",
