@@ -9,20 +9,35 @@ var http = require('http'),
     logger = require('morgan');
     bodyParser = require('body-parser');
 
+const config = require('./config.js');
+var twiliAccntInfoFromFile=config.getTwiliAccountSettingsfromFile ;
+
 
 
 var request = require('/usr/local/lib/node_modules/request');
 
-// Load configuration information from system environment variables.
-var TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-    TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN,
-    TWILIO_SYNC_SID = process.env.TWILIO_SYNC_SERVICE_SID ,
-    TWILIO_SYNC_API_KEY = process.env.TWILIO_SYNC_API_KEY,
-    TWILIO_SYNC_API_SECRET = process.env.TWILIO_SYNC_API_SECRET;
+if (twiliAccntInfoFromFile !="Y" )
+   {
+     console.log("Loading Configuration from environment");
+     // Load configuration information from system environment variables
+     var TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
+         TWILIO_SYNC_SID = process.env.TWILIO_SYNC_SERVICE_SID ,
+         TWILIO_SYNC_API_KEY = process.env.TWILIO_SYNC_API_KEY,
+         TWILIO_SYNC_API_SECRET = process.env.TWILIO_SYNC_API_SECRET;
+   }
+else
+   {
+     console.log("Loading Configuration from config.js");
+     // Load configuration information config file
+     var TWILIO_ACCOUNT_SID = config.accountSid;
+         TWILIO_SYNC_SID = config.serviceSid ,
+         TWILIO_SYNC_API_KEY = config.apiKey,
+         TWILIO_SYNC_API_SECRET =  config.apiSecret;
+   }
 
-//Create an authenticated client to access the Twilio REST API
-var REST_Client = require('/usr/local/lib/node_modules/node-rest-client').Client;
-var client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+
+
+
 
 //For Sync
 var AccessToken = require('./twilio-temp').AccessToken;
