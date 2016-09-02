@@ -209,9 +209,7 @@ function syncThisFormElement (formMapName,formFieldName,formFieldAttributes,form
                                                     }
 
 
-                                                    //formMap.on("itemAdded" , syncNow );
-                                                    /*formMap.on("itemUpdated" , syncNow );
-                                                    if(startSyncFlag==0) startSyncing();*/
+
                                                     formMap.on("itemUpdated" , onUpdateAction );
                                                     if(startSyncFlag==0) initFormAndTwilioSync();
 
@@ -323,80 +321,6 @@ function TwilioSyncToForm(item)
 
 }
 
-function syncNow(item)
-{
-
-
-       console.log("in SyncNow : Detected change in map");
-       var elementModifield=item.key;
-       var elementModifier=item.value.from;
-       var elementType = item.value.elementType ;
-
-       //var foundElement=document.getElementById(elementModifield);
-
-       /*changing above foundElement logic to below  - START*/
-
-           var findthisElement = $.grep(syncableElemMap , function(res)
-                                                               {
-                                                                 return ( res.elementType === elementType) ;
-                                                               }
-                                       );
-
-
-
-
-           if (findthisElement.length == 0 )
-           {
-              throw "UNSUPPORTED ELEMENT : The element you tried to sync is currently UNSUPPORTED "
-           }
-           else if  ( findthisElement.length == 1)
-           {
-             console.log ("So you trying to sync : " +  findthisElement);
-             var thisElement=findthisElement[0];
-           }
-           else
-           {
-               throw "TBD- syncing multiple properties for same element "
-           }
-
-
-         var searchThisElem = elementModifield;
-
-
-         var foundElement=document.querySelectorAll('['+thisElement.searchPropName+'="'+searchThisElem+'"]'+thisElement.additionalSearchString)[0] ;
-
-       /*changing above foundElement logic to below  - END*/
-
-       if(elementModifier)
-       {
-         var elementModAttrib=item.value.attribName.split(',');
-         console.log(" handling "  + elementModifield + ";by" + elementModifier+ ";property" + elementModAttrib)  ;
-         if ( elementModifier != endpointId )
-           {
-               console.log(item);
-               if (elementModAttrib.constructor === Array)
-                {
-                    evaluateAttrib=foundElement;
-                    for (var ctr=0 , maxCtr = elementModAttrib.length -1 ; ctr < maxCtr ; ctr++)
-                        {
-                           evaluateAttrib =   evaluateAttrib[elementModAttrib[ctr]];
-                        }
-                    evaluateAttrib[elementModAttrib[ctr]]   = item.value.value;
-                }
-               else
-                {
-                    foundElement[elementModAttrib] = item.value.value;
-                }
-            }
-       }
-       if ( elementType == "DIV")
-       {
-          foundElement.style.display="none";
-          foundElement.offsetHeight ;
-          foundElement.style.display='';
-       }
-
-}
 
 
 
