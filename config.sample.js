@@ -1,6 +1,6 @@
 module.exports = {
   //flag to get Twilio Account Setting from this file or from environment
-  getTwiliAccountSettingsfromFile: 'N',
+  getTwiliAccountSettingsfromFile: 'Y',
 
   // Your primary Twilio Account SID
   accountSid: 'ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
