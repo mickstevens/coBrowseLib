@@ -1,0 +1,544 @@
+
+<html>
+  <head>
+      <title>The Basics</title>
+  </head>
+
+  <body>
+      <!--Include jQuery [optional, not required for Sync]-->
+        <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+      <!-- Optional theme -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+      <!-- Style  -->
+      <link rel="stylesheet" href="/css/style.paper.css" >
+
+      <!-- Slider  -->
+      <link href="https://cdn.jsdelivr.net/jquery.roundslider/1.3/roundslider.min.css" rel="stylesheet" />
+      <script src="https://cdn.jsdelivr.net/jquery.roundslider/1.3/roundslider.min.js"></script>
+
+
+
+
+      <div class="container-full">
+
+            <div class="row">
+
+              <div class="col-lg-12 text-center v-center">
+
+                <h2>Hello , Sync !</h2>
+                <p class="h5">Getting Started with Co Browsing</p>
+
+                <br>
+
+            <form class="form-horizontal" name="cobrowsingStarter" id="cobrowsingStarter">
+              <fieldset>
+
+                      <!-- Form Name -->
+                      <legend></legend>
+
+                      <!-- Color input-->
+                      <p></p>
+
+
+                      <div class="form-group" style="display:none" id="coBrowsingIdDiv">
+                        <label class="col-md-4 control-label" for="coBrowsingId " ></label>
+                        <div class="col-md-4 label label-success"  id="coBrowsingId" >
+                          <label>Id here</label>
+                        </div>
+                      </div>
+
+                      <!-- Text input-->
+                      <p></p>
+                      <div class="form-group">
+                        <label class="col-md-4 control-label" for="dontSyncThisTextBox">Name</label>
+                        <div class="col-md-4">
+                          <input id="dontSyncThisTextBox" name="dontSyncThisTextBox" type="text" placeholder="placeholder" class="form-control input-md" data-coBrowsable="true">
+                        <span class="help-block">Will leave this text box as is </span>
+                        </div>
+                      </div>
+
+                        <!-- Textarea -->
+                        <p></p>
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="syncThisTextArea">Property Description</label>
+                          <div class="col-md-4">
+                            <textarea class="form-control" id="syncThisTextArea" name="syncThisTextArea"  data-coBrowsable="true" >default text</textarea>
+                          </div>
+                        </div>
+
+
+                        <!-- Inbuilt HTML 5 Slider -->
+                        <p></p>
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="mortgageLength">Mortgage length</label>
+                          <div class="col-md-4">
+                            <input type="range" min="0" max="35" value="25" id="mortgageLength" name="mortgageLength" step="1" onchange="outputUpdate(value)" onSlide="outputUpdate(value)" data-coBrowsable="true">
+                                <output for="mortgageLength" id="mortgageValueDisp">25</output>
+                          </div>
+                        </div>
+
+
+                        <!-- Date Picker-->
+                        <p></p>
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="mortgageDate">Mortgage Start Date</label>
+                          <div class="col-md-4">
+                                <input type="date" id="mortgageDate" name="mortgageDate"  placeholder="2014-09-08" data-coBrowsable="true" >
+                          </div>
+                        </div>
+
+                        <!-- Custom Slider
+                        <p></p>
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="slider">Mortgage length</label>
+                          <div class="col-md-4">
+                            <div id="appearance7" name="customSlider"  data-coBrowsable="true" ></div>
+                          </div>
+                        </div>
+                         -->
+
+
+                        <!-- Multiple Radios (inline) -->
+                        <p></p>
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="inlineRadio">Number of Residents</label>
+                          <div class="col-md-4">
+                            <label class="radio-inline" for="inlineRadio-0">
+                              <input type="radio" name="inlineRadio" id="inlineRadio-0" value="1" checked="checked" data-coBrowsable="true">
+                              1
+                            </label>
+                            <label class="radio-inline" for="inlineRadio-1">
+                              <input type="radio" name="inlineRadio" id="inlineRadio-1" value="2" data-coBrowsable="true">
+                              2
+                            </label>
+                            <label class="radio-inline" for="inlineRadio-2">
+                              <input type="radio" name="inlineRadio" id="inlineRadio-2" value="3" data-coBrowsable="true">
+                              3
+                            </label>
+                            <label class="radio-inline" for="inlineRadio-4">
+                              <input type="radio" name="inlineRadio" id="inlineRadio-3" value="4" data-coBrowsable="true">
+                              4
+                            </label>
+                            <label class="radio-inline" for="inlineRadio-5">
+                              <input type="radio" name="inlineRadio" id="inlineRadio-4" value="5" data-coBrowsable="true">
+                              5
+                            </label>
+                            <label class="radio-inline" for="inlineRadio-6">
+                              <input type="radio" name="inlineRadio" id="inlineRadio-5" value="6" data-coBrowsable="true">
+                              6
+                            </label>
+                            <label class="radio-inline" for="inlineRadio-7">
+                              <input type="radio" name="inlineRadio" id="inlineRadio-6" value="7" data-coBrowsable="true">
+                              7
+                            </label>
+                          </div>
+                        </div>
+
+                        <!-- Color input-->
+                        <p></p>
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="colorPicker">Choose Your color</label>
+                          <div class="col-md-4">
+                            <input id="colorPicker" type="color" name="favcolor" value="#DDCCEE" >
+                          <span class="help-block">This will be used to identify your drawings </span>
+                          </div>
+                        </div>
+
+
+                        <!-- Annotate input-->
+                        <p></p>
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="onoffswitch">Annotate</label>
+                          <div class="col-md-4">
+                              <div class="onoffswitch">
+                                  <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" >
+                                  <label class="onoffswitch-label" for="myonoffswitch" onclick="javascript:openNav();">
+                                    <span class="onoffswitch-switch"></span>
+                                    <span class="onoffswitch-inner" ></span>
+                                  </label>
+                              </div>
+                          </div>
+                        </div>
+
+
+                </fieldset>
+              </form>
+              </div>
+
+            </div> <!-- /row -->
+
+
+
+        	<br><br><br><br><br>
+
+      </div> <!-- /container full -->
+
+      <!-- The overlay -->
+      <div id="myAnnotateArea" class="overlay">
+
+        <!-- Button to close the overlay navigation -->
+        <a href="javascript:void(0)" class="closebtn" onclick='$(".onoffswitch-checkbox").click();closeNav()'>&times;</a>
+        <a href="javascript:void(0)" class="resetBtn" onclick='resetCanvas();'>&minus;</a>
+
+
+        <!-- Overlay content -->
+        <div class="overlay-content" id="annotateParentDiv">
+
+        </div>
+
+      </div>
+
+      <div class="container">
+
+        	<hr>
+
+        	<div class="row">
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading"><h3>What is Sync?</h3></div>
+                  <div class="panel-body">
+                                          <p>
+                                          Twilio Sync simplifies the notoriously difficult development challenge of reliably maintaining application state.
+                                          When you go to facebook.com and you click on your notifications, you expect the “1” to immediately disappear and for that badge to disappear from your Facebook mobile app as well.
+                                          </p>
+                                          <p>
+                                          State management in real-time across devices becomes challenging when any of the devices can edit the “state” of the notification and several may edit state simultaneously.
+                                          Take a google docs example - what if two users edit the same word at the same time? What if different users have different internet connection speeds and one of the editors hasn’t seen
+                                          a change that someone else has already made? How do you resolve differences in state?
+                                          Sync solves this by persisting state in the cloud with real-time synchronization with powerful tools for conflict resolution and the ability to gracefully handle devices losing and
+                                          regaining internet connectivity.
+                                          </p>
+
+                  </div>
+                </div>
+              </div>
+            	<div class="col-md-4">
+              	<div class="panel panel-default">
+                  <div class="panel-heading"><h3>What are the primary use cases for Sync?</h3></div>
+                  <div class="panel-body">
+                  <p>
+                  <b>Real-time presence</b>
+                  Build presence into your apps that allows your users to visualize who’s available, who’s busy, the last time they were active, and any custom statuses.
+                  </p>
+
+                  <p>
+                  <b>Cross-platform apps</b>
+                  Allow users to begin where they left off when they log in from a different device. Twilio saves each user’s state and updates it automatically.
+                  </p>
+
+                  <p>
+                  <b>Sync is killing the save button</b>
+                  Users no longer expect to have to the save button. When you compose an email you don’t expect to have to hit save. Your email should be automatically synced in the cloud.
+                  </p>
+
+                  <p>
+                  <b>Collaboration</b>
+                  Co-browse and co-edit within your existing applications. Whether that’s guiding a customer through a complex process in a web or mobile app, or collaborating on a code, or text editor.
+                  </p>
+
+                  <p>
+                  <b>Location tracking</b>
+                  Track the location of a driver in real time as they head your way.
+                  </p>
+
+                  <p>
+                  <b>Other use cases</b> : screen sharing, whiteboarding, drawing on-top of a video session
+                  </p>
+
+                  </div>
+                </div>
+              </div>
+            	<div class="col-md-4">
+              	<div class="panel panel-default">
+                  <div class="panel-heading"><h3>How do I get access to Sync?</h3></div>
+                  <div class="panel-body">
+                    <p>Sync is in developer preview and hence not publicly available.</p>
+
+                    <p>Visit <a href="https://www.twilio.com/sync">this page</a>, click the link at the bottom of the page and provide the details of your company and use-case to request access.</p>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+      	<div class="row">
+              <div class="col-lg-12">
+              <br><br>
+                <p class="pull-right"><a href="https://twitter.com/abhijitMehta">Drop me a message for any queries</a> &nbsp;</p>
+              <br><br>
+              </div>
+          </div>
+      </div>
+
+
+
+
+            <!--Twilio common library-->
+              <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
+            <!--Twilio Sync-->
+            <script src="https://media.twiliocdn.com/sdk/js/sync/v0.2/twilio-sync.min.js"></script>
+            <!--Wrapper Library-->
+            <script src="/js/syncForms.js" type="text/javascript"></script>
+
+            <script type="text/javascript">
+
+
+            function addTextToTooltip(args)
+                {
+                      return args.value + "<div> years </div>";
+                }
+
+
+
+            /* Open when someone clicks on the span element */
+            function openNav()
+            {
+                document.getElementById("myAnnotateArea").style.width = "100%";
+            }
+
+            /* Close when someone clicks on the "x" symbol inside the overlay */
+            function closeNav()
+            {
+                document.getElementById("myAnnotateArea").style.width = "0%";
+            }
+
+            $("#coBrowsingId").html("Co-browsing as :" + randomUsername());
+            $('#coBrowsingIdDiv').show();
+
+            function outputUpdate(len)
+            {
+            	document.querySelector('#mortgageValueDisp').value = len;
+            }
+
+
+            /*Canvas Handling */
+            /*GLOBAL*/
+            var canvas;
+
+            var line, isDown;
+            var clickX = new Array();
+            var clickY = new Array();
+            var clickDrag = new Array();
+            var paint;
+            var context;
+            /*GLOBAL*/
+
+
+            var canvasDiv = document.getElementById('myAnnotateArea');
+            canvas = document.createElement('canvas');
+            canvas.style.position="absolute";
+            canvas.style.left="0px";
+            canvas.style.top="0px";
+            canvas.style.width="100%";
+            canvas.style.height="100%";
+            canvas.style.zIndex="1000";
+            canvas.width=window.innerWidth;
+            canvas.height=window.innerHeight;
+            canvas.setAttribute('style', 'border:1px solid #ccc');
+            canvas.setAttribute('id', 'annotateCanvas');
+            //canvas.setAttribute('style', 'border:1px solid #ccc');
+
+
+            canvasDiv.appendChild(canvas);
+            if(typeof G_vmlCanvasManager != 'undefined')
+            {
+              canvas = G_vmlCanvasManager.initElement(canvas);
+            }
+            context = canvas.getContext("2d");
+
+
+
+            function clearCanvas()
+            {
+              context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+            }
+
+
+
+            function addClick(x, y, dragging )
+            {
+              clickX.push(x);
+              clickY.push(y);
+              clickDrag.push(dragging);
+
+              var l_formFieldAppendAttribList = new Array();
+              var l_formFieldAppendAttribValueList = new Array();
+
+
+              var fieldName = 'annotateCanvas';
+
+              var fieldAttrText = '{'
+                + ' "from": "' + endpointId + '"'
+                + '}';
+
+
+                var   fieldAttr = JSON.parse(fieldAttrText);
+
+                fieldAttr["arrayX"]=clickX ;
+                fieldAttr["arrayY"]=clickY ;
+                fieldAttr["arrayDrag"]=clickDrag ;
+
+              syncThisFormElement(formMapName,fieldName,fieldAttr,l_formFieldAppendAttribList,l_formFieldAppendAttribValueList,SyncToCanvas);
+
+
+            }
+
+
+            function redraw(color)
+            {
+              context.clearRect(0, 0, context.canvas.width, context.canvas.height);  // Clears the canvas
+
+              if(color=="cyan")
+              {
+                 context.strokeStyle = "#19F053";
+              }
+              else
+              {
+                context.strokeStyle = "#1399F2";
+              }
+              context.strokeStyle=colorPicker.value;
+
+              context.lineJoin = "round";
+              context.lineWidth = 5;
+
+              for(var i=0; i < clickX.length; i++) {
+                context.beginPath();
+                if(clickDrag[i] && i){
+                  context.moveTo(clickX[i-1], clickY[i-1]);
+                 }else{
+                   context.moveTo(clickX[i]-1, clickY[i]);
+                 }
+                 context.lineTo(clickX[i], clickY[i]);
+                 context.closePath();
+                 context.stroke();
+              }
+            }
+
+
+            $('#annotateCanvas').mousedown(function(e)
+            {
+              console.log("canvas mouse down event ");
+              var mouseX = e.pageX - this.offsetLeft;
+              var mouseY = e.pageY - this.offsetTop;
+
+              paint = true;
+              addClick(mouseX, mouseY,false);
+              redraw();
+
+
+            });
+
+            $('#annotateCanvas').on('touchstart',function(e)
+            {
+
+                var mouseX = e.originalEvent.pageX - this.offsetLeft;
+                var mouseY = e.originalEvent.pageY - this.offsetTop;
+
+                paint = true;
+                e.preventDefault();
+                addClick(mouseX, mouseY,false,"y");
+                redraw();
+            });
+
+
+
+
+            $('#annotateCanvas').mouseup(function(e)
+            {
+              console.log("canvas mouse up event ");
+              addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+              paint = false;
+            });
+
+            $('#annotateCanvas').on('touchend',function(e)
+            {
+              var mouseX = e.originalEvent.pageX - this.offsetLeft;
+              var mouseY = e.originalEvent.pageY - this.offsetTop;
+              addClick(mouseX, mouseY,true);
+              paint = false;
+
+            });
+
+            $('#annotateCanvas').mousemove(function(e)
+            {
+                //console.log("canvas mouse move event ");
+
+                if(paint)
+                {
+                  addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+                  redraw();
+                }
+
+              });
+
+
+
+            $('#annotateCanvas').on('touchmove',function(e)
+            {
+                //console.log("canvas touch move event ");
+
+                e.preventDefault();
+
+                var mouseX = e.originalEvent.targetTouches[0].pageX - this.offsetLeft;
+                var mouseY = e.originalEvent.targetTouches[0].pageY - this.offsetTop;
+
+                if(paint)
+                {
+                  addClick(mouseX, mouseY, true);
+                  redraw();
+                }
+
+            });
+
+            $('#annotateCanvas').mouseleave(function(e)
+                {
+                  //console.log("canvas mouse leave event ");
+
+                  paint = false;
+                });
+
+            $('#annotateCanvas').on('touchcancel',function(e)
+            {
+              //console.log("canvas touchcancel leave event ");
+
+              paint = false;
+            });
+
+
+            function resetCanvas()
+            {
+              clickX = new Array();
+              clickY = new Array();
+              clickDrag = new Array();
+              clearCanvas();
+            }
+
+            function SyncToCanvas(item)
+            {
+
+                console.log("annotate : mouseove:itemUpdated")
+                var elementModifield=item.key;
+                var elementModifier=item.value.from;
+                //console.log(" handling "  + elementModifield)  ;
+                if ( elementModifier != endpointId )
+                  {
+
+
+                            clickX = item.value.arrayX;
+                            clickY = item.value.arrayY;
+                            clickDrag = item.value.arrayDrag;
+                            redraw("cyan");
+                   }
+
+                 //console.log('10');
+            }
+
+
+
+
+            </script>
+  </body>
+</html>
