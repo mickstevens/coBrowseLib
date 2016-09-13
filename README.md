@@ -36,6 +36,19 @@ When you generate an API key pair at the URLs above, your API Secret will only
 be shown once - make sure to save this in a secure location, 
 or possibly your `~/.bash_profile`.
 
+##App Components and Access Tokens 
+
+We have two different components  in this app
+
+1. A client (browser) - HTML form which we will make co-browsable 
+2. A server which vouches for the identity of your browser instances ( each opened co-browsable page) 
+
+The role of server side of this app is to contact Twilio (Twilio Sync) and get an access token . The access token is passed to Client (Browser in this case) to create a client for Twilio Sync . This helps abstracting out any account information ( Account SID , API Keys ,Instance IDs ) at client side and hence enforcing secure communication between Sync client on the browser to Twilo Sync on the cloud using the Access Tokens 
+
+
+>>For the simplicity of understanding the concept , I have left out user creation and maintenance . I am using randomly generated name for each page that is requested . In a real life scenario , you could create a one-to-one cobrowsing between a customer and user by implementing 
+
+
 ## Setting Up The Node.js Application
 #### Clone this repo from github 
 
