@@ -1,76 +1,70 @@
 
 
-var syncClient=null;
-var myLisName="";
-var formMapName="";
-var myList=null;
-var formMap=null;
-var accessManager= null;
-var token=null;
-var endpointId=null;
-var fullcobrowserId=null;
-var timeStamp=(new  Date()).getTime();
+/* Global Variables */
+var syncClient = null;
+var myLisName = "";
+var formMapName = "";
+var myList = null;
+var formMap = null;
+var accessManager = null;
+var token = null;
+var endpointId = null;
+var fullcobrowserId = null;
+var timeStamp = (new  Date()).getTime();
 var cbEndPointsList;
-var startSyncFlag=0;
+var startSyncFlag = 0;
+
+
+/*
+                        _____________________ Cobrowser1 (cobrowserId)
+                       |
+                       |________________________________Cobrowser2 (cobrowserId)
+                       |
+                       |
+                       |_________________Cobrowser3 (cobrowserId)
+      sessionKey ------+
+                       |
+                       |_________________________________________Cobrowser4 (cobrowserId)
+                       |
+                       |
+                       |___________________ Cobrowser5 (cobrowserId)
+*/
 
 
 
-
-
-/*create random id using alphabets and numbers*/
-function makeid(numChar)
-  {
-      var text = "";
-      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-      for( var i=0; i < numChar; i++ )
-          text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-      return text;
-  }
-
-function chooseOne(arr)
-  {
-      return arr[Math.floor(Math.random()*arr.length)];
-  }
-
-function randomUsername()
-{
-  var ADJECTIVES = [
-      'Abrasive', 'Brash', 'Callous', 'Daft', 'Eccentric', 'Fiesty', 'Golden',
-      'Holy', 'Ignominious', 'Joltin', 'Killer', 'Luscious', 'Mushy', 'Nasty',
-      'OldSchool', 'Pompous', 'Quiet', 'Rowdy', 'Sneaky', 'Tawdry',
-      'Unique', 'Vivacious', 'Wicked', 'Xenophobic', 'Yawning', 'Zesty'
-  ];
-
-  var XMEN = ['ProfessorX','Beast','Colossus','Cyclops','Iceman','MarvelGirl','Storm',
-                'Wolverine','Shadowcat','Nightcrawler','Rogue','Angel','Dazzler','Syndicate','Magician',
-                'Bishop','Pyro','Psylocke','Toad','Firestar'];
-
-
-
-      return chooseOne(ADJECTIVES) + chooseOne(XMEN) ;//+ "-" +makeid(4);
-}
-
-
+/* Function Name  : getTokenAndSetupCoBrowsing
+   Input          : (1) cobrowserId  - Any random identity to be used as name for this endpoint
+   Description    : This endpoint needs to be authenticated . Get AccessToken from the Server that would vouch for this endpoint
+*/
 
 function getTokenAndSetupCoBrowsing(cobrowserId)
   {
     return new Promise(function(resolve, reject)
     {
 
-      endpointId=cobrowserId+makeid(11)+'_'+timeStamp;
+      endpointId = cobrowserId+makeid(11)+'_'+timeStamp;
 
-      /*Get the token .  */
+      /*Get the token .  This endpoint has been set up as a server app , which you need to setup . The server would interact with Twilio and pass Token to this endpoint . This model ensures there are no identificatin informatin exposed
+        at client side . For a sample server app , have a look at https://github.com/abhijitmehta/coBrowseLib .*/
       $.get('/getToken?identity=' + cobrowserId + '&endpointId=' + endpointId, function( data )
                {
-                     /*[DEBUG]*/  //console.log(data);
                      resolve(data);
                 }
           );
 
     });
   }
+
+
+
+  /* Function Name  : startCobrowsing
+     Input          : (1) cobrowserId  - Any random identity to be used as name for this endpoint
+                      (2) sessionKey   - Name for this cobrowsing session. This is the name that each endpoints would use to share there information . See above diagram to understand the role and positioning of
+                                        cobrowserId  and sessionKey
+     Description    : Initialise Cobrowsing  by performing following actions
+                      (A) Initiate a client to Twilio Sync
+                      (B) Register this endpoint(browser) to Twilio Sync and provide global information for this browser .
+  */
 
 function startCobrowsing(cobrowserId,sessionKey)
   {
@@ -79,16 +73,14 @@ function startCobrowsing(cobrowserId,sessionKey)
       .then(
               function(token)
                     {
-                          /*[DEBUG]*/  //
                           console.log("TOKEN::",token);
 
-                          formMapName='cobrowsingAt'+sessionKey;
-                          cbEndPointsList=new Array();
+                          formMapName = 'cobrowsingAt'+sessionKey;
+                          cbEndPointsList = new Array();
 
                           /* Create a Twilio Sync client to access its data structures - map and list to be used fo syncing endpoints */
                           accessManager = new Twilio.AccessManager(token.token);
                           syncClient = new Twilio.Sync.Client(accessManager);
-                          /*[DEBUG]*/  //console.log(syncClient);
                           cbEndPointsList.push(endpointId);
 
 
@@ -116,14 +108,17 @@ function startCobrowsing(cobrowserId,sessionKey)
                 );
 
 
-      //return false ;
   }
 
+
+  /* Function Name  : syncThisFormElement
+     Input          :
+     Description    :
+  */
 
 function syncThisFormElement (formMapName,formFieldName,formFieldAttributes,formFieldAppendAttribList,formFieldAppendAttribValueList,onUpdateAction)
 {
 
-        console.log("in syncThisFormElement ");
 
         if ( formFieldAppendAttribList.length  != formFieldAppendAttribValueList.length )
            {
@@ -136,11 +131,11 @@ function syncThisFormElement (formMapName,formFieldName,formFieldAttributes,form
 
 
           /* Create map now for the form shared across various endpoints sharing the same sessionKey*/
-          gotFormMap=syncClient.map(formMapName).then(function(map)
+          gotFormMap = syncClient.map(formMapName).then(function(map)
                                                {
 
 
-                                                    formMap=map;
+                                                    formMap = map;
 
 
                                                     if ( formFieldAppendAttribList.length > 0 )
@@ -152,27 +147,25 @@ function syncThisFormElement (formMapName,formFieldName,formFieldAttributes,form
 
                                                                             if ( remoteValueParsed != "{}")
                                                                             {
-                                                                              console.log("Item Exists in map  : " + map.sid)
-                                                                              console.log();
+
                                                                               var appendListLength = formFieldAppendAttribList.length ;
 
                                                                               var i = 0;
-                                                                              for ( i= 0 ; i<appendListLength;i++)
+                                                                              for ( i = 0 ; i<appendListLength;i++)
                                                                                   {
                                                                                     if (remoteValue[formFieldAppendAttribList[i]])
                                                                                     {
                                                                                       var endPointListArrayFromServer = remoteValue[formFieldAppendAttribList[i]].toString().split(',');
-                                                                                      formFieldAttributes[formFieldAppendAttribList[i]]=endPointListArrayFromServer;
+                                                                                      formFieldAttributes[formFieldAppendAttribList[i]] = endPointListArrayFromServer;
                                                                                       formFieldAttributes[formFieldAppendAttribList[i]].push(formFieldAppendAttribValueList[i])
                                                                                     }
 
                                                                                   }
-                                                                                remoteValue=formFieldAttributes;
+                                                                                remoteValue = formFieldAttributes;
                                                                                 return remoteValue ;
                                                                               }
                                                                              else
                                                                               {
-                                                                                  console.log("Item  does not  Exist " );
                                                                                   formMap.set(formFieldName,formFieldAttributes
                                                                                                            ).then(function(item)
                                                                                                                 {
@@ -211,7 +204,7 @@ function syncThisFormElement (formMapName,formFieldName,formFieldAttributes,form
 
 
                                                     formMap.on("itemUpdated" , onUpdateAction );
-                                                    if(startSyncFlag==0) initFormAndTwilioSync();
+                                                    if(startSyncFlag === 0) initFormAndTwilioSync();
 
                                                 });
 
@@ -220,6 +213,98 @@ function syncThisFormElement (formMapName,formFieldName,formFieldAttributes,form
 }
 
 
+
+
+
+
+
+/* Function Name  : initFormAndTwilioSync
+   Input          :
+   Description    :
+*/
+function initFormAndTwilioSync()
+{
+  startSyncFlag = 1;
+
+  var validFormElemArr = $('[data-coBrowsable="true"]') ;
+
+
+  var validFormElemSerializedArr = $('[data-coBrowsable="true"]').serializeArray() ;
+  $.each(validFormElemSerializedArr , function ( elemIdx , validFormElement)
+                                      {
+                                           var elementName = validFormElement.name ;
+                                           var elementValue = validFormElement.value;
+                                           var thisElement = $('[name="'+ elementName +'"]')[0];
+                                           var elementType = thisElement.type;
+                                           var elementTag = thisElement.tagName ;
+                                           var elementId = thisElement.id;
+
+
+                                           thisElement.onload = function() {  elemInitValue(elementId)} ;
+                                           //thisElement.onkeyup = function() { formToTwilioSync(elementType , elementId ,elementName , elementValue)}   ;
+                                           //thisElement.onmouseup = function() { formToTwilioSync(elementType , elementId ,elementName , elementValue)}   ;
+                                           //thisElement.onchange = function() { formToTwilioSync(elementType , elementId ,elementName , elementValue)}   ;
+                                           $('[name="'+ elementName +'"]').on('change',function() { formToTwilioSync(elementType , elementId ,elementName , elementValue)}   ) ;
+                                           $('[name="'+ elementName +'"]').on('keyup',function() { formToTwilioSync(elementType , elementId ,elementName , elementValue)}   ) ;
+
+                                           //thisElement.oninput = function() { formToTwilioSync(elementType , elementId ,elementName , elementValue)}   ;
+
+                                           elemInitValue(elementId)
+                                           //thisElement.onchange = function() { formToTwilioSync(elementType , elementId ,elementName , elementValue )}   ;
+
+
+                                      }
+                                    );
+
+
+}
+
+
+
+
+
+
+/* Function Name  : TwilioSyncToForm
+   Input          :
+   Description    :
+*/
+function TwilioSyncToForm(item)
+{
+
+  console.log("in TwilioSyncToForm : Detected change in map");
+  var elementModifield = item.key;
+  var elementModifier = item.value.from;
+  var elementType = item.value.elementType ;
+  var elementName = item.value.elementName ;
+  var elementValue = item.value.value ;
+
+  if ( elementModifier != endpointId )
+    {
+
+        $('[name="'+elementName+'"]').val([elementValue]);
+    }
+
+
+
+}
+
+/* Function Name  : getInitValueforElement
+   Input          :
+   Description    :
+*/
+var elemInitValue = function getInitValueforElement(i_elementId)
+{
+     console.log("in getInitValueforElement ");
+     formMap.get(i_elementId).then(TwilioSyncToForm);
+
+}
+
+
+
+/* Function Name  : sendFormDataToCloud
+   Input          :
+   Description    :
+*/
 var formToTwilioSync = function sendFormDataToCloud(i_elementType,i_elementId ,i_elementName ,i_elementValue)
 {
 
@@ -252,82 +337,11 @@ var formToTwilioSync = function sendFormDataToCloud(i_elementType,i_elementId ,i
 }
 
 
-//TBD - (1) handle multiple forms - forms by name and forms by id   , may be search by jquery searchstring
-function initFormAndTwilioSync()
-{
-  console.log("in initFormAndTwilioSync ");
-  startSyncFlag=1;
-
-  var validFormElemArr = $('[data-coBrowsable="true"]') ;
-
-
-  var validFormElemSerializedArr = $('[data-coBrowsable="true"]').serializeArray() ;
-  $.each(validFormElemSerializedArr , function ( elemIdx , validFormElement)
-                                      {
-                                           var elementName=validFormElement.name ;
-                                           var elementValue=validFormElement.value;
-                                           var thisElement = $('[name="'+ elementName +'"]')[0];
-                                           var elementType=thisElement.type;
-                                           var elementTag=thisElement.tagName ;
-                                           var elementId=thisElement.id;
-
-
-                                           thisElement.onload=function() {  elemInitValue(elementId)} ;
-                                           //thisElement.onkeyup =function() { formToTwilioSync(elementType , elementId ,elementName , elementValue)}   ;
-                                           //thisElement.onmouseup =function() { formToTwilioSync(elementType , elementId ,elementName , elementValue)}   ;
-                                           //thisElement.onchange =function() { formToTwilioSync(elementType , elementId ,elementName , elementValue)}   ;
-                                           $('[name="'+ elementName +'"]').on('change',function() { formToTwilioSync(elementType , elementId ,elementName , elementValue)}   ) ;
-                                           $('[name="'+ elementName +'"]').on('keyup',function() { formToTwilioSync(elementType , elementId ,elementName , elementValue)}   ) ;
-
-                                           //thisElement.oninput =function() { formToTwilioSync(elementType , elementId ,elementName , elementValue)}   ;
-
-                                           elemInitValue(elementId)
-                                           //thisElement.onchange=function() { formToTwilioSync(elementType , elementId ,elementName , elementValue )}   ;
-
-
-                                      }
-                                    );
-
-
-}
-
-
-
-var elemInitValue = function getInitValueforElement(i_elementId)
-{
-     console.log("in getInitValueforElement ");
-     formMap.get(i_elementId).then(TwilioSyncToForm);
-
-}
-
-
-function TwilioSyncToForm(item)
-{
-
-  console.log("in TwilioSyncToForm : Detected change in map");
-  var elementModifield=item.key;
-  var elementModifier=item.value.from;
-  var elementType = item.value.elementType ;
-  var elementName = item.value.elementName ;
-  var elementValue = item.value.value ;
-
-  if ( elementModifier != endpointId )
-    {
-
-        $('[name="'+elementName+'"]').val([elementValue]);
-    }
-
-
-
-}
-
-
-
-
 $(function ()
 {
 
-  startCobrowsing(makeid(4),"TestRun211")  ;
+
+  startCobrowsing(makeid(4),"TestRun212")  ;
 
 
 }

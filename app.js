@@ -2,19 +2,19 @@
 var http = require('http'),
     path = require('path'),
     express = require('express'),
-    twilio = require('/usr/local/lib/node_modules/twilio');
-    bodyParser = require('body-parser');
-    cookieParser = require('cookie-parser');
-    favicon = require('serve-favicon');
-    logger = require('morgan');
-    bodyParser = require('body-parser');
+    twilio = require('twilio'),
+    bodyParser = require('body- parser'),
+    cookieParser = require('cookie-parser'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    bodyParser = require('body-parser'),
+    request = require('request');
 
 const config = require('./config.js');
 var twiliAccntInfoFromFile=config.getTwiliAccountSettingsfromFile ;
 
 
 
-var request = require('/usr/local/lib/node_modules/request');
 
 if (twiliAccntInfoFromFile !="Y" )
    {
@@ -40,6 +40,8 @@ else
 
 
 //For Sync
+//twilio-temp till the point Sync Accesstoken is included in the standard twilio helper libary .Toggle the two lines below then.
+//  var AccessToken = twilio.AccessToken;
 var AccessToken = require('./twilio-temp').AccessToken;
 var SyncGrant = AccessToken.SyncGrant;
 

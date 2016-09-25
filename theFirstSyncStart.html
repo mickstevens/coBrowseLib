@@ -14,13 +14,16 @@
       <!-- Latest compiled and minified JavaScript -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
       <!-- Style  -->
-      <link rel="stylesheet" href="/css/style.css" >
+      <link rel="stylesheet" href="/css/style.paper.css" >
       <!--Twilio common library-->
         <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
       <!--Twilio Sync-->
       <script src="https://media.twiliocdn.com/sdk/js/sync/v0.2/twilio-sync.min.js"></script>
       <!--Wrapper Library-->
       <script src="/js/syncForms.js" type="text/javascript"></script>
+      <script src="/js/randomUserName.js" type="text/javascript"></script>
+
+
 
 
 
@@ -45,7 +48,7 @@
                         <div class="form-group">
                           <label class="col-md-4 control-label" for="syncThisTextArea">Will Sync This Text area</label>
                           <div class="col-md-4">
-                            <textarea class="form-control" id="syncThisTextArea" name="syncThisTextArea"  >default text</textarea>
+                            <textarea class="form-control" id="syncThisTextArea" name="syncThisTextArea" data-coBrowsable="true" >default text</textarea>
                           </div>
                         </div>
 
