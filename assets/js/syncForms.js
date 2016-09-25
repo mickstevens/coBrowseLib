@@ -2,14 +2,10 @@
 
 /* Global Variables */
 var syncClient = null;
-var myLisName = "";
 var formMapName = "";
-var myList = null;
 var formMap = null;
 var accessManager = null;
-var token = null;
 var endpointId = null;
-var fullcobrowserId = null;
 var timeStamp = (new  Date()).getTime();
 var cbEndPointsList;
 var startSyncFlag = 0;
