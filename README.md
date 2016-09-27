@@ -1,9 +1,9 @@
 # coBrowseLib
-Javascript library built on top of Twilio Sync to power Co-Browsing on HTML forms . https://www.twilio.com/sync 
+Javascript library built on top of Twilio Sync to power Co-Browsing on HTML forms . https://www.twilio.com/sync
 >####Library  : https://github.com/abhijitmehta/coBrowseLib/blob/master/syncForms.js
 >Include this in any of your HTML Forms and set data-CoBrowsable="true" for the form elements that you want to be co-Browsable.
 
-# coBrowseLib - Setting up the Demo App 
+# coBrowseLib - Setting up the Demo App
 
 # Pre-requisites
 
@@ -33,7 +33,7 @@ curl -X POST https://preview.twilio.com/Sync/Services \
 ## A Note on API Keys
 
 When you generate an API key pair at the URLs above, your API Secret will only
-be shown once - make sure to save this in a secure location, 
+be shown once - make sure to save this in a secure location,
 or possibly your `~/.bash_profile`.
 
 ##App Components and Access Tokens 
@@ -50,7 +50,7 @@ The role of server side of this app is to contact Twilio (Twilio Sync) and get a
 
 
 ## Setting Up The Node.js Application
-#### Clone this repo from github 
+#### Clone this repo from github
 
 
 #### Create a configuration file for your application:
@@ -64,14 +64,11 @@ Edit `config.js` with the four configuration parameters we gathered from above.
 ####  install our dependencies from npm:
 
 ```bash
-cd twilio-temp/
-npm install
-cd ..
 npm install
 ```
 
 
-#### Run the application 
+#### Run the application
 
 ```bash
 node .
@@ -79,7 +76,7 @@ OR
 nodemon
 ```
 
-Your application should now be running at 
+Your application should now be running at
 
 ```bash
 http://localhost:3000/firstSync
