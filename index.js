@@ -2,13 +2,7 @@
 var http = require('http'),
     path = require('path'),
     express = require('express'),
-    twilio = require('twilio'),
-    bodyParser = require('body- parser'),
-    cookieParser = require('cookie-parser'),
-    favicon = require('serve-favicon'),
-    logger = require('morgan'),
-    bodyParser = require('body-parser'),
-    request = require('request');
+    twilio = require('twilio');
 
 const config = require('./config.js');
 var twiliAccntInfoFromFile=config.getTwiliAccountSettingsfromFile ;
@@ -41,31 +35,19 @@ else
 
 //For Sync
 //twilio-temp till the point Sync Accesstoken is included in the standard twilio helper libary .Toggle the two lines below then.
-//  var AccessToken = twilio.AccessToken;
-var AccessToken = require('./twilio-temp').AccessToken;
+  var AccessToken = twilio.jwt.AccessToken;
+//var AccessToken = require('./twilio-temp').AccessToken;
 var SyncGrant = AccessToken.SyncGrant;
 
 // Express specific
-var routes = require('./routes/index');
-var users = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'assets')));
 app.use(express.static(path.join(__dirname, 'css')));
 
-app.use('/', routes);
-app.use('/users', users);
 
 
 //AM: Start Here
@@ -132,12 +114,6 @@ app.get("/firstSyncStart" , function(req,res)
 );
 
 
-app.get("/SyncOwl",function(req,res)
- {
-  res.sendFile(__dirname +"/theFirstSyncWithOwl.html");
-});
-
-
 
 
 //AM: Ends  Here
@@ -181,3 +157,10 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+// Create http server and run it
+var server = http.createServer(app);
+var port = process.env.PORT || 3000;
+server.listen(port, () => {
+  console.log('Express server running on *:' + port);
+});
