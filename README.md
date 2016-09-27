@@ -1,6 +1,6 @@
 # coBrowseLib
 Javascript library built on top of Twilio Sync to power Co-Browsing on HTML forms . https://www.twilio.com/sync
->####Library  : https://github.com/abhijitmehta/coBrowseLib/blob/master/syncForms.js
+>####Library  : https://github.com/abhijitmehta/coBrowseLib/blob/master/assets/js/syncForms.js
 >Include this in any of your HTML Forms and set data-CoBrowsable="true" for the form elements that you want to be co-Browsable.
 
 # coBrowseLib - Setting up the Demo App
